@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+</h:head>
+<h:body>
+
+	<h:form id="frm">
+
+		<p:commandButton value="Adicionar cliente"
+			oncomplete="PF('confirmacao').show()" />
+		<p:dataTable value="#{clientesBean.cliente}" style="margin-top: 20px"
+			var="cliente" id="clientesTable" emptyMessage="Não existem clientes.">
+			<p:column headerText="Nome" style="widht: 100">
+				<h:outputText value="#{cliente.nome}" />
+			</p:column>
+
+			<p:column headerText="Telefone" style="widht: 80">
+				<h:outputText value="#{cliente.telefone}" />
+			</p:column>
+
+			<p:column width="40">
+				<p:commandButton icon="ui-icon-trash"
+					oncomplete="PF('confExclusao').show()" update="clientesTable" process="@this">
+					<f:setPropertyActionListener value="#{cliente.nome}"
+						target="#{clientesBean.clienteSelecionado}" />
+				</p:commandButton>
+			</p:column>
+		</p:dataTable>
+
+		<p:confirmDialog header="Inclusão de cliente" widgetVar="confirmacao">
+			<h:panelGrid columns="2">
+				<p:outputLabel value="Nome" for="nome" />
+				<p:inputText id="nome" value="#{clientesBean.nomeCliente}" required="true"/>
+
+				<p:outputLabel value="Telefone" for="telefone" />
+				<p:inputText id="telefone" value="#{clientesBean.telefoneCliente}" required="true" />
+
+				<p:spacer />
+				<p:commandButton value="Incluir" action="#{clientesBean.adicionarCliente}" update="@form" />
+			</h:panelGrid>
+		</p:confirmDialog>
+
+		<p:confirmDialog header="Exclusão de cliente"
+			message="Tem certeza que deseja excluir o cliente?"
+			widgetVar="confExclusao">
+
+			<p:commandButton value="Sim" update="clientesTable"
+				oncomplete="PF('confExclusao').hide()"
+				action="#{clientesBean.excluirCliente}" process="@this"/>
+
+			<p:button value="Nao" update="clientesTable"
+				oncomplete="PF('confExclusao').hide(); return false;" />
+
+		</p:confirmDialog>
+	</h:form>
+
+</h:body>
+</html>

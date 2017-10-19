@@ -1,0 +1,42 @@
+package com.mwcc;
+
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ViewScoped;
+
+@ManagedBean
+@ViewScoped
+public class ProdutosBean implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
+	private List<String> produtos =  new ArrayList<>();
+	private String produtoSelecionado;
+	
+	public ProdutosBean() {
+		produtos.add("Arroz");
+		produtos.add("Feijão");
+		produtos.add("Macarrão");
+		produtos.add("Notebook");
+	}
+	
+	public void excluirProduto() {
+		produtos.remove(produtoSelecionado);
+	}
+
+	public List<String> getProdutos() {
+		return produtos;
+	}
+
+	public String getProdutoSelecionado() {
+		return produtoSelecionado;
+	}
+
+	public void setProdutoSelecionado(String produtoSelecionado) {
+		this.produtoSelecionado = produtoSelecionado;
+	}
+	
+	
+}
