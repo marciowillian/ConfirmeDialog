@@ -4,8 +4,10 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 
 @ManagedBean
 @ViewScoped
@@ -22,13 +24,19 @@ public class ClientesBean implements Serializable {
 	public ClientesBean() {
 		cliente.add(new Cliente("Marcio Willian", "98981056278"));
 		cliente.add(new Cliente("Leticia Padilha", "98999717142"));
-		cliente.add(new Cliente("João Lucas", "98991351407"));
+		cliente.add(new Cliente("João Lucas", "98991351407"));	
+	}
+
+	public void msgTeste() {
+		FacesContext context = FacesContext.getCurrentInstance();
 		
+		context.addMessage(null, new FacesMessage("Sucesso","Cliente excluido" ));
 	}
 
 	public void adicionarCliente() {
 		cliente.add(new Cliente(nomeCliente, telefoneCliente));
-		
+		nomeCliente = null;
+		telefoneCliente = null;
 		System.out.println("Nome" + this.nomeCliente);
 		System.out.println(this.telefoneCliente);
 		
@@ -67,5 +75,6 @@ public class ClientesBean implements Serializable {
 	}
 
 		
+	
 	
 }

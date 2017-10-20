@@ -27,7 +27,7 @@
 			<p:column width="40">
 				<p:commandButton icon="ui-icon-trash"
 					oncomplete="PF('confExclusao').show()" update="clientesTable" process="@this">
-					<f:setPropertyActionListener value="#{cliente.nome}"
+					<f:setPropertyActionListener value="#{cliente}"
 						target="#{clientesBean.clienteSelecionado}" />
 				</p:commandButton>
 			</p:column>
@@ -36,21 +36,23 @@
 		<p:confirmDialog header="Inclusão de cliente" widgetVar="confirmacao">
 			<h:panelGrid columns="2">
 				<p:outputLabel value="Nome" for="nome" />
-				<p:inputText id="nome" value="#{clientesBean.nomeCliente}" required="true"/>
+				<p:inputText id="nome" value="#{clientesBean.nomeCliente}" required="true" />
 
 				<p:outputLabel value="Telefone" for="telefone" />
 				<p:inputText id="telefone" value="#{clientesBean.telefoneCliente}" required="true" />
-
+	
 				<p:spacer />
 				<p:commandButton value="Incluir" action="#{clientesBean.adicionarCliente}" update="@form" />
 			</h:panelGrid>
 		</p:confirmDialog>
 
+		<p:growl id="mensagem" showDetail="true"/>
+
 		<p:confirmDialog header="Exclusão de cliente"
 			message="Tem certeza que deseja excluir o cliente?"
 			widgetVar="confExclusao">
 
-			<p:commandButton value="Sim" update="clientesTable"
+			<p:commandButton value="Sim" update="clientesTable mensagem" actionListener="#{clientesBean.msgTeste}"
 				oncomplete="PF('confExclusao').hide()"
 				action="#{clientesBean.excluirCliente}" process="@this"/>
 
